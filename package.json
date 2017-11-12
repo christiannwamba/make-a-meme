@@ -1,0 +1,30 @@
+{
+  "name": "meme-generator",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "./",
+  "dependencies": {
+    "axios": "^0.17.0",
+    "body-parser": "^1.18.2",
+    "cloudinary": "^1.9.1",
+    "cloudinary-core": "^2.3.0",
+    "connect-multiparty": "^2.1.0",
+    "express": "^4.16.2",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-dropzone": "^4.2.1",
+    "react-toggle": "^4.0.2",
+    "webtask-tools": "^3.2.0"
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.17"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "server:start": "npm run server:create -- --watch",
+    "server:create": "wt create server --bundle"
+  }
+}

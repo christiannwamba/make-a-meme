@@ -1,0 +1,28 @@
+.dropzone-wrapper {
+  cursor: pointer;
+  height: 100%;
+}
+
+.dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 4rem;
+}
+
+.fetch-input {
+  display: flex;
+  width: 80%;
+}
+
+.no-radius-left {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.no-radius-right {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}

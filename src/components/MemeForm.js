@@ -45,20 +45,6 @@ export default ({
           </div>
         </div>
       </div>
-      <div className="toggle-box" style={{ display: !memeReady ? 'block' : 'none' }}>
-        <Toggle
-          checked={stage === 'DND'}
-          icons={false}
-          onChange={toggleStage}
-        />
-        <div>
-          {stage === 'DND' ? (
-            <span>Switch to URL (Fetch)</span>
-          ) : (
-            <span>Switch to Drag n' Drop</span>
-          )}
-        </div>
-      </div>
       {!memeReady ? (
         <button
           style={{ display: !!topText && !!bottomText ? 'block' : 'none' }}

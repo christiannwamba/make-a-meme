@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// Axios for Ajax
-import axios from 'axios';
 // CL SDK
 import cloudinary from 'cloudinary-core';
 
@@ -28,9 +26,6 @@ class App extends Component {
       pending: false
     };
 
-    // Webtask server to handle image upload
-    this.requestURL =
-      'https://wt-nwambachristian-gmail_com-0.run.webtask.io/meme-generator/upload';
     // Cloudinary instance
     this.cl = cloudinary.Cloudinary.new({ cloud_name: 'christekh' });
 

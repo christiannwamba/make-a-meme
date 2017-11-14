@@ -6,8 +6,6 @@ import cloudinary from 'cloudinary-core';
 
 // Child stateless
 // presentation components
-import DndUpload from './components/DndUpload';
-import UrlUpload from './components/UrlUpload';
 import Preview from './components/Preview';
 import MemeForm from './components/MemeForm';
 import Hero from './components/Hero';
@@ -24,9 +22,7 @@ class App extends Component {
     this.state = {
       topText: '',
       bottomText: '',
-      file: null,
-      imageUrl: '',
-      stage: 'DND',
+      stage: 'UPD',
       preview: '',
       memeReady: false,
       pending: false
@@ -38,46 +34,37 @@ class App extends Component {
     // Cloudinary instance
     this.cl = cloudinary.Cloudinary.new({ cloud_name: 'christekh' });
 
+    this.uploadWidget = window.cloudinary.createUploadWidget(
+      { cloud_name: 'christekh', upload_preset: 'idcidr0h' },
+      (error, [data]) => {
+        // Transform returned image
+        const previewUrl = this.cl.url(data.secure_url, {
+          transformation: [this.defaultTransformation().general]
+        });
+        this.setState({ preview: previewUrl, stage: 'PVR' });
+      }
+    );
+
     // Rebind contexts
-    this.onDrop = this.onDrop.bind(this);
-    this.handleImageUrlChange = this.handleImageUrlChange.bind(this);
-    this.getImageWithURL = this.getImageWithURL.bind(this);
-    this.getImageWithDND = this.getImageWithDND.bind(this);
+    this.initiateUpload = this.initiateUpload.bind(this);
     this.transformToMeme = this.transformToMeme.bind(this);
-    this.toggleStage = this.toggleStage.bind(this);
     this.handleTopTextChange = this.handleTopTextChange.bind(this);
     this.handleBottomTextChange = this.handleBottomTextChange.bind(this);
     this.makeMeme = this.makeMeme.bind(this);
     this.reset = this.reset.bind(this);
   }
 
-  // Set all state values 
+  // Set all state values
   // to defaults
   reset() {
     this.setState({
       topText: '',
       bottomText: '',
-      file: null,
-      imageUrl: '',
       stage: 'DND',
       preview: '',
       memeReady: false,
       pending: false
     });
-  }
-
-  // [Event handler]
-  // Shows a different arena based
-  // on the stage state. There are 3 arenas:
-  // - Drag n' Drop
-  // - URL Fetch
-  // - Preview
-  toggleStage() {
-    if (this.state.stage === 'DND') {
-      this.setState({ stage: 'URL' });
-    } else {
-      this.setState({ stage: 'DND' });
-    }
   }
 
   // Returns re-usable transformation
@@ -98,74 +85,20 @@ class App extends Component {
     };
   }
 
-  // [Event handlers]
-  // There are 3 React controlled input
-  // ..
-  // 1. Image URL
-  handleImageUrlChange(event) {
-    const { value } = event.target;
-    this.setState({ imageUrl: value });
-  }
-
-  // 2. Meme's top text
+  // 1. Meme's top text
   handleTopTextChange(event) {
     const { value } = event.target;
     this.setState({ topText: value });
   }
 
-  // 3. Mem's bottom text
+  // 2. Mem's bottom text
   handleBottomTextChange(event) {
     const { value } = event.target;
     this.setState({ bottomText: value });
   }
 
-  // Called when an image
-  // is dropped in the drop zone
-  onDrop(files) {
-    if (files.length > 0) {
-      // Update the file state and
-      // call `getImageWithDND` after 
-      // setState (which is async) completes
-      this.setState({ file: files[0] }, this.getImageWithDND);
-    }
-  }
-
-  // Upload image to server using axios
-  getImageWithDND() {
-    // Assemble file
-    const formData = new FormData();
-    formData.append('image', this.state.file);
-    // Show loading indicator
-    this.setState({ pending: true });
-    // Post to server
-    axios.post(this.requestURL, formData).then(({ data: { data } }) => {
-      // Transform returned image
-      const previewUrl = this.cl.url(data.secure_url, {
-        transformation: [
-          this.defaultTransformation().general
-        ]
-      });
-      // Set preview state with manipulated image
-      this.setState({ preview: previewUrl, stage: 'PVR', pending: false });
-    });
-  }
-
-  // [Event handler]
-  // Alternatively, get image via URL
-  getImageWithURL() {
-    const { imageUrl, stage } = this.state;
-    if (stage === 'URL' && imageUrl.match(/\.(jpeg|jpg|gif|png)$/) != null) {
-      // Manipulate retrieved image
-      const previewUrl = this.cl.url(imageUrl, {
-        // Tell Cloudinary it's a URL
-        type: 'fetch',
-        transformation: [
-          this.defaultTransformation().general
-        ]
-      });
-      // Set preview state with manipulated image
-      this.setState({ preview: previewUrl, stage: 'PVR' });
-    }
+  initiateUpload() {
+    this.uploadWidget.open();
   }
 
   // Convert image in preview to Meme
@@ -215,20 +148,18 @@ class App extends Component {
               handleBottomTextChange={this.handleBottomTextChange}
               makeMeme={this.makeMeme}
               stage={this.state.stage}
-              toggleStage={this.toggleStage}
               memeReady={this.state.memeReady}
               preview={this.state.preview}
               reset={this.reset}
             />
             <div className="meme-box column">
-              {stage === 'DND' ? (
-                <DndUpload onDrop={this.onDrop} />
-              ) : stage === 'URL' ? (
-                <UrlUpload
-                  imageUrl={this.state.imageUrl}
-                  handleImageUrlChange={this.handleImageUrlChange}
-                  getImageWithURL={this.getImageWithURL}
-                />
+              {stage !== 'PVR' ? (
+                <button
+                  onClick={this.initiateUpload}
+                  className="button is-info is-margin-top"
+                >
+                  Upload
+                </button>
               ) : (
                 <Preview preview={this.state.preview} />
               )}

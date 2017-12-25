@@ -25,9 +25,11 @@ cd make-a-meme
 npm install
 
 # Run your app
+```bash
 npm start
 
 ```
+
 This will immediately start a local server on the default browser on port 3000.
 
 

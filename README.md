@@ -19,10 +19,14 @@ node -v
 git clone https://github.com/christiannwamba/make-a-meme.git make-a-meme
 
 # Change directory
+```bash
 cd make-a-meme
+```
 
 # Install the dependencies
+```bash
 npm install
+```
 
 # Run your app
 ```bash

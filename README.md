@@ -2,7 +2,7 @@
 
 This repository contains the source code for the two part series tutorial that shows and teach how to build a meme generator using React and Cloudinary's image upload and transformations tools.
 
-You can check access the Articles [here](https://medium.com/@codebeast_/build-a-meme-generator-using-react-and-cloudinary-part-1-uploading-images-9846a738f040) and [the second part](https://medium.com/@codebeast_/build-a-meme-generator-with-react-and-cloudinary-part-2-meme-generation-408edd250fc) to get a better explanations on how most of the implementations were done.
+You can access the Articles [here](https://medium.com/@codebeast_/build-a-meme-generator-using-react-and-cloudinary-part-1-uploading-images-9846a738f040) and [the second part](https://medium.com/@codebeast_/build-a-meme-generator-with-react-and-cloudinary-part-2-meme-generation-408edd250fc) to get a better explanations on how most of the implementations were done.
 
 
 ## Installation

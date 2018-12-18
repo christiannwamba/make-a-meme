@@ -1,5 +1,4 @@
 import React from 'react';
-import Toggle from 'react-toggle';
 import 'react-toggle/style.css';
 import './MemeForm.css';
 
@@ -46,6 +45,8 @@ export default ({
         </div>
       </div>
       {!memeReady ? (
+        <div>
+          <br/>
         <button
           style={{ display: !!topText && !!bottomText ? 'block' : 'none' }}
           className="button is-dark"
@@ -53,23 +54,37 @@ export default ({
         >
           Make a MEME
         </button>
+        </div>
       ) : (
-        <div class="button-group">
-          <button
-            onClick={reset}
-            className="button is-dark"
-            style={{ display: 'inline-block' }}
-          >
-            RESET
-          </button>
-          <a
-            href={preview}
-            target="_blank"
-            className="button is-link"
-            style={{ display: 'inline-block', marginLeft: '10px' }}
-          >
-            Download
-          </a>
+        <div>
+          <div class="button-group">
+            <button
+              onClick={reset}
+              className="button is-dark"
+              style={{ display: 'inline-block' }}
+            >
+              RESET
+            </button>
+            <a
+              href={preview}
+              target="_blank"
+              className="button is-link"
+              style={{ display: 'inline-block', marginLeft: '10px' }}
+            >
+              Download
+            </a>
+          </div>
+          <br/>
+          <div>
+            <h5 className="subtitle is-6">Share your meme
+              <a href={"https://www.facebook.com/sharer/sharer.php?u="+preview}class="button is-small is-link">
+                <span>Facebook</span>
+              </a>
+              <a href={"https://twitter.com/intent/tweet?text=I%20made%20this%20meme%20"+preview} class="button is-small is-info ">
+                <span>Twitter</span>
+              </a>
+            </h5>
+          </div>
         </div>
       )}
     </div>
